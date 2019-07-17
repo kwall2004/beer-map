@@ -1,3 +1,9 @@
 {
-    "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "beautify.ignore": ["**/*.scss", "**/*.css"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  },
+  "prettier.printWidth": 120,
+  "editor.tabSize": 2
 }
