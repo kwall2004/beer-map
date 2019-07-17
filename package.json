@@ -4,11 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --aot --prod",
     "lint:fix": "ng lint --fix",
     "format:check": "prettier --list-different \"src/**/*.ts\" \"src/**/*.json\" \"src/**/*.scss\"",
     "format:fix": "pretty-quick --staged"
