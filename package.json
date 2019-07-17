@@ -7,7 +7,15 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "lint:fix": "ng lint --fix",
+    "format:check": "prettier --list-different \"src/**/*.ts\" \"src/**/*.json\" \"src/**/*.scss\"",
+    "format:fix": "pretty-quick --staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s lint:fix format:fix"
+    }
   },
   "private": true,
   "dependencies": {
