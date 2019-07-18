@@ -4,7 +4,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from 'src/environments/environment';
+
+import { environment } from '../../environments/environment';
 
 import { effects } from './store/effects';
 import { metaReducers, reducers } from './store/reducers';
