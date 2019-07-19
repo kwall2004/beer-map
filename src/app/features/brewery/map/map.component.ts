@@ -1,3 +1,4 @@
+import { InfoWindow } from '@agm/core/services/google-maps-types';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
@@ -15,6 +16,7 @@ import { CoreState } from '../../../core/store/reducers';
 })
 export class MapComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject();
+  private previousInfoWindow: InfoWindow;
 
   values = [];
 
@@ -37,5 +39,13 @@ export class MapComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.isDestroyed$.next();
+  }
+
+  onMarkerClick(currentInfoWindow: InfoWindow) {
+    if (this.previousInfoWindow) {
+      this.previousInfoWindow.close();
+    }
+
+    this.previousInfoWindow = currentInfoWindow;
   }
 }
