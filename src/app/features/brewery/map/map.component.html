@@ -1,1 +1,4 @@
-<agm-map style="height: 800px;"></agm-map>
+<agm-map [fitBounds]="true" style="height: 800px;">
+  <agm-marker *ngFor="let value of values" [latitude]="value.latitude" [longitude]="value.longitude"
+    [agmFitBounds]="true"></agm-marker>
+</agm-map>
