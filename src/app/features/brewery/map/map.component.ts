@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { BrewerySelectors } from 'src/app/core/store/selectors';
 
+import { BrewerySelectors } from '../../../../app/core/store/selectors';
 import { BreweryActions } from '../../../core/store/actions';
 import { CoreState } from '../../../core/store/reducers';
 
