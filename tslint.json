@@ -54,7 +54,8 @@
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "no-namespace": false,
-    "variable-name": false
+    "variable-name": false,
+    "no-trailing-whitespace": false
   },
   "rulesDirectory": ["codelyzer"]
 }
