@@ -55,7 +55,8 @@
     "use-pipe-transform-interface": true,
     "no-namespace": false,
     "variable-name": false,
-    "no-trailing-whitespace": false
+    "no-trailing-whitespace": false,
+    "semicolon": false
   },
   "rulesDirectory": ["codelyzer"]
 }

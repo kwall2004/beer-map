@@ -39,42 +39,40 @@ export class MapComponent implements OnInit, OnDestroy {
         )
         .subscribe(values => {
           values.forEach((v, i) => {
-            if (i > 49) {
-              return;
-            }
-
             const value = this.values.find(_v => _v.id === v.id);
 
             if (!!value) {
               return;
             }
 
-            this.geocoder.geocode(
-              {
-                address: `${values[0].street}, ${values[0].city}, ${values[0].state} ${values[0].postalCode}, ${values[0].country}`
-              },
-              (results, status) => {
-                if (status.toString() !== 'OK') {
-                  console.error(status);
-                  return;
-                }
-
-                if (results.length !== 1) {
-                  console.error(results);
-                  return;
-                }
-
-                this.values.push({
-                  ...v,
-                  location: {
-                    latitude: results[0].geometry.location.lat(),
-                    longitude: results[0].geometry.location.lng()
+            setTimeout(() => {
+              this.geocoder.geocode(
+                {
+                  address: `${values[i].street}, ${values[i].city}, ${values[i].state} ${values[i].postalCode}, ${values[i].country}`
+                },
+                (results, status) => {
+                  if (status.toString() !== 'OK') {
+                    console.error(status);
+                    return;
                   }
-                });
 
-                this.cd.detectChanges();
-              }
-            );
+                  if (results.length !== 1) {
+                    console.error(results);
+                    return;
+                  }
+
+                  this.values.push({
+                    ...v,
+                    location: {
+                      latitude: results[0].geometry.location.lat(),
+                      longitude: results[0].geometry.location.lng()
+                    }
+                  });
+
+                  this.cd.detectChanges();
+                }
+              );
+            }, i * 2000);
           });
         });
     });
