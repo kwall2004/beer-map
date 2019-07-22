@@ -5,9 +5,9 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { skipWhile, takeUntil } from 'rxjs/operators';
 
-import { BrewerySelectors } from '../../../../app/core/store/selectors';
-import * as Models from '../../../core/models';
-import { BreweryActions } from '../../../core/store/actions';
+import { BrewerySeedSelectors } from '../../../../app/core/store/selectors';
+// import * as Models from '../../../core/models';
+import { BrewerySeedActions } from '../../../core/store/actions';
 import { CoreState } from '../../../core/store/reducers';
 
 @Component({
@@ -19,61 +19,65 @@ import { CoreState } from '../../../core/store/reducers';
 export class MapComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject();
   private previousInfoWindow: InfoWindow;
-  private geocoder: google.maps.Geocoder;
+  // private geocoder: google.maps.Geocoder;
 
-  values: Models.Brewery[] = [];
+  values = [];
 
   constructor(private store: Store<CoreState>, private cd: ChangeDetectorRef, private mapsApiLoader: MapsAPILoader) {}
 
   ngOnInit() {
-    this.store.dispatch(BreweryActions.read());
+    this.store.dispatch(BrewerySeedActions.read());
 
     this.mapsApiLoader.load().then(() => {
-      this.geocoder = new google.maps.Geocoder();
+      // this.geocoder = new google.maps.Geocoder();
 
       this.store
-        .select(BrewerySelectors.values)
+        .select(BrewerySeedSelectors.values)
         .pipe(
           skipWhile(values => !values || !values.length),
           takeUntil(this.isDestroyed$)
         )
         .subscribe(values => {
-          values.forEach((v, i) => {
-            const value = this.values.find(_v => _v.id === v.id);
+          console.log(values);
+          this.values = values;
+          this.cd.detectChanges();
 
-            if (!!value) {
-              return;
-            }
+          // values.forEach(v => {
+          //   const value = this.values.find(_v => _v.id === v.id);
 
-            setTimeout(() => {
-              this.geocoder.geocode(
-                {
-                  address: `${values[i].street}, ${values[i].city}, ${values[i].state} ${values[i].postalCode}, ${values[i].country}`
-                },
-                (results, status) => {
-                  if (status.toString() !== 'OK') {
-                    console.error(status);
-                    return;
-                  }
+          //   if (!!value) {
+          //     return;
+          //   }
 
-                  if (results.length !== 1) {
-                    console.error(results);
-                    return;
-                  }
+          // setTimeout(() => {
+          //   this.geocoder.geocode(
+          //     {
+          //       address: `${values[i].street}, ${values[i].city}, ${values[i].state} ${values[i].postalCode}, ${values[i].country}`
+          //     },
+          //     (results, status) => {
+          //       if (status.toString() !== 'OK') {
+          //         console.error(status);
+          //         return;
+          //       }
 
-                  this.values.push({
-                    ...v,
-                    location: {
-                      latitude: results[0].geometry.location.lat(),
-                      longitude: results[0].geometry.location.lng()
-                    }
-                  });
+          //       if (results.length !== 1) {
+          //         console.error(results);
+          //         return;
+          //       }
 
-                  this.cd.detectChanges();
-                }
-              );
-            }, i * 2000);
-          });
+          //       this.values.push({
+          //         ...v,
+          //         location: {
+          //           latitude: results[0].geometry.location.lat(),
+          //           longitude: results[0].geometry.location.lng()
+          //         }
+          //       });
+
+          //       this.cd.detectChanges();
+          //     }
+          //   );
+          // }, i * 2000);
+          // });
         });
     });
   }
