@@ -1,5 +1,5 @@
 <agm-map [fitBounds]="true" style="height: 800px;">
-  <agm-marker *ngFor="let value of values" [latitude]="value.latitude" [longitude]="value.longitude"
+  <agm-marker *ngFor="let value of values" [latitude]="value.location.latitude" [longitude]="value.location.longitude"
     [agmFitBounds]="true" (markerClick)="onMarkerClick(infoWindow)">
     <agm-info-window #infoWindow>{{value.name}}</agm-info-window>
   </agm-marker>
