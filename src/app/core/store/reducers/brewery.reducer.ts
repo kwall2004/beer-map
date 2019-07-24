@@ -15,7 +15,7 @@ export function reducer(_state: State | undefined, _action: Action) {
   return createReducer(
     INITIAL_STATE,
 
-    on(BreweryActions.store, (state, action) => ({
+    on(BreweryActions.storeValues, (state, action) => ({
       ...state,
       values: action.values
     }))

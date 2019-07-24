@@ -10,8 +10,8 @@ describe('app reducer', () => {
     });
   });
 
-  it('handles store', () => {
-    const state = reducer(undefined, BreweryActions.store({ values: [{}] as Models.Brewery[] }));
+  it('handles store values', () => {
+    const state = reducer(undefined, BreweryActions.storeValues({ values: [{}] as Models.Brewery[] }));
 
     expect(state).toEqual({
       ...INITIAL_STATE,

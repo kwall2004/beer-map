@@ -6,8 +6,6 @@ export interface Brewery {
   state: string;
   postalCode: string;
   country: string;
-  location?: {
-    latitude: number;
-    longitude: number;
-  };
+  latitude: string;
+  longitude: string;
 }

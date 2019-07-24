@@ -11,10 +11,10 @@ export class BreweryEffects {
 
   read$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BreweryActions.read),
+      ofType(BreweryActions.readValues),
       mergeMap(() =>
         this.breweryService.get().pipe(
-          map(values => BreweryActions.store({ values })),
+          map(values => BreweryActions.storeValues({ values })),
           catchError(response => {
             console.error(response);
             return [];
