@@ -9,4 +9,9 @@ export namespace BreweryActions {
     '[brewery] STORE_VALUES',
     props<{ values: Models.Brewery[] }>()
   );
+
+  export const storeValue = createAction(
+    '[brewery] STORE_VALUE',
+    props<{ value: Models.Brewery }>()
+  );
 }

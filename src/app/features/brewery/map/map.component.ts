@@ -1,9 +1,8 @@
-import { MapsAPILoader } from '@agm/core';
 import { InfoWindow } from '@agm/core/services/google-maps-types';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { catchError, delay, mergeMap, retryWhen, skipWhile, takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { skipWhile, takeUntil } from 'rxjs/operators';
 
 import { BrewerySelectors } from '../../../../app/core/store/selectors';
 import * as Models from '../../../core/models';
@@ -19,12 +18,10 @@ import { CoreState } from '../../../core/store/reducers';
 export class MapComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject();
   private previousInfoWindow: InfoWindow;
-  private geocoder: google.maps.Geocoder;
-  private value$ = new Subject<Models.Brewery>();
 
   values: Models.Brewery[] = [];
 
-  constructor(private store: Store<CoreState>, private cd: ChangeDetectorRef) {}
+  constructor(private store: Store<CoreState>) {}
 
   ngOnInit() {
     this.store.dispatch(BreweryActions.readValues());

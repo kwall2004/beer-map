@@ -18,6 +18,11 @@ export function reducer(_state: State | undefined, _action: Action) {
     on(BreweryActions.storeValues, (state, action) => ({
       ...state,
       values: action.values
+    })),
+
+    on(BreweryActions.storeValue, (state, action) => ({
+      ...state,
+      values: state.values.concat(action.value)
     }))
   )(_state, _action);
 }
