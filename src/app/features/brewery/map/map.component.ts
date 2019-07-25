@@ -35,6 +35,7 @@ export class MapComponent implements OnInit, OnDestroy {
       .subscribe({
         next: values => {
           console.log(values);
+          this.values = values;
         }
       });
   }
