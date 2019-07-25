@@ -9,7 +9,22 @@ import { BreweryActions } from '../actions';
 export class BreweryEffects {
   constructor(private actions$: Actions, private breweryService: BreweryService) {}
 
-  read$ = createEffect(() =>
+  createValue$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BreweryActions.createValue),
+      mergeMap(action =>
+        this.breweryService.post(action.value).pipe(
+          map(value => BreweryActions.storeValue({ value })),
+          catchError(response => {
+            console.error(response);
+            return [];
+          })
+        )
+      )
+    )
+  );
+
+  readValues$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BreweryActions.readValues),
       mergeMap(() =>
