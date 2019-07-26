@@ -27,7 +27,7 @@ export class BrewerySeedEffects {
 
             return this.breweryService.get().pipe(
               mergeMap(seedValue => {
-                const address = `${seedValue.street}, ${seedValue.city}, ${seedValue.state} ${seedValue.postalCode}, ${seedValue.country}`;
+                const address = `${seedValue.street}, ${seedValue.city}, ${seedValue.state}, ${seedValue.country}`;
 
                 return new Observable<Models.Brewery>(observer => {
                   geocoder.geocode({ address }, (results, status) => {
@@ -41,15 +41,22 @@ export class BrewerySeedEffects {
                       return;
                     }
 
+                    let result = results[0];
+
                     if (results.length !== 1) {
-                      observer.error(results);
-                      return;
+                      result = results.find(r => r.types.includes('street_address'));
+
+                      if (!result) {
+                        observer.error(results);
+                        return;
+                      }
                     }
 
                     observer.next({
                       ...seedValue,
-                      latitude: results[0].geometry.location.lat(),
-                      longitude: results[0].geometry.location.lng()
+                      postalCode: result.address_components.find(c => c.types.includes('postal_code')).long_name,
+                      latitude: result.geometry.location.lat(),
+                      longitude: result.geometry.location.lng()
                     });
                   });
                 }).pipe(
@@ -64,7 +71,7 @@ export class BrewerySeedEffects {
                         failures = failures.filter(f => f !== seedValue.id).concat(seedValue.id);
                         console.log(seedValue.name, error, 'retrying...');
                       }),
-                      delay(30000)
+                      delay(10000)
                     )
                   ),
                   map(value => {

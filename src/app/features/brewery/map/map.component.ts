@@ -1,5 +1,5 @@
 import { InfoWindow } from '@agm/core/services/google-maps-types';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { skipWhile, takeUntil } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   values: Models.Brewery[] = [];
 
-  constructor(private store: Store<CoreState>) {}
+  constructor(private store: Store<CoreState>, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.store.dispatch(BreweryActions.readValues());
@@ -36,6 +36,7 @@ export class MapComponent implements OnInit, OnDestroy {
         next: values => {
           console.log(values);
           this.values = values;
+          this.cd.detectChanges();
         }
       });
   }
