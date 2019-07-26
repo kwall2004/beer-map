@@ -1,6 +1,25 @@
-<agm-map [fitBounds]="true" style="height: 800px;">
-  <agm-marker *ngFor="let value of values" [latitude]="value.latitude" [longitude]="value.longitude"
-    [agmFitBounds]="true" (markerClick)="onMarkerClick(infoWindow)">
-    <agm-info-window #infoWindow>{{value.name}}</agm-info-window>
-  </agm-marker>
-</agm-map>
+<div class="d-flex">
+  <div>
+    <div *ngFor="let value of values" class="card" (click)="onCardClick(value)">
+      <div class="card-body">
+        <div class="card-title">
+          {{value.name}}
+        </div>
+        <div class="card-text">
+          <div>
+            {{value.street}}
+          </div>
+          <div>
+            {{value.city}}, {{value.state}} {{value.postalCode}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <agm-map [fitBounds]="true" style="height: 800px; width: 100%;">
+    <agm-marker *ngFor="let value of selectedValues" [latitude]="value.latitude" [longitude]="value.longitude"
+      [agmFitBounds]="true" (markerClick)="onMarkerClick(infoWindow)">
+      <agm-info-window #infoWindow>{{value.name}}</agm-info-window>
+    </agm-marker>
+  </agm-map>
+</div>

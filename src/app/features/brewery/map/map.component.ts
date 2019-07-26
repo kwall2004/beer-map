@@ -20,6 +20,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private previousInfoWindow: InfoWindow;
 
   values: Models.Brewery[] = [];
+  selectedValues: Models.Brewery[] = [];
 
   constructor(private store: Store<CoreState>, private cd: ChangeDetectorRef) {}
 
@@ -36,6 +37,7 @@ export class MapComponent implements OnInit, OnDestroy {
         next: values => {
           console.log(values);
           this.values = values;
+          this.selectedValues = values;
           this.cd.detectChanges();
         }
       });
@@ -51,5 +53,9 @@ export class MapComponent implements OnInit, OnDestroy {
     }
 
     this.previousInfoWindow = currentInfoWindow;
+  }
+
+  onCardClick(value: Models.Brewery) {
+    this.selectedValues = [value];
   }
 }
