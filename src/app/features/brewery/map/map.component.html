@@ -1,6 +1,7 @@
 <div class="d-flex">
   <div>
-    <div *ngFor="let value of values" class="card" (click)="onCardClick(value)">
+    <div *ngFor="let value of values; let i = index" class="card" (mouseenter)="onMouseenter(i)"
+      (mouseleave)="onMouseleave(i)">
       <div class="card-body">
         <div class="card-title">
           {{value.name}}
@@ -17,8 +18,9 @@
     </div>
   </div>
   <agm-map [fitBounds]="true" style="height: 800px; width: 100%;">
-    <agm-marker *ngFor="let value of selectedValues" [latitude]="value.latitude" [longitude]="value.longitude"
-      [agmFitBounds]="true" (markerClick)="onMarkerClick(infoWindow)">
+    <agm-marker *ngFor="let value of values; let i = index" [latitude]="value.latitude" [longitude]="value.longitude"
+      [agmFitBounds]="true" [animation]="animations[i]"
+      [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'" (markerClick)="onMarkerClick(infoWindow)">
       <agm-info-window #infoWindow>{{value.name}}</agm-info-window>
     </agm-marker>
   </agm-map>
